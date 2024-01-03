@@ -1,15 +1,26 @@
 import React from 'react';
 
-import {StyleSheet, Text, View} from 'react-native';
+import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
 
 function App(): React.JSX.Element {
   return (
-    <View>
-      <Text>Hello</Text>
-    </View>
+    <SafeAreaView style={styles.safeView}>
+      <View style={styles.view}>
+        <Text>Hello</Text>
+      </View>
+    </SafeAreaView>
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  safeView: {
+    flex: 1,
+    backgroundColor: 'red',
+  },
+  view: {
+    flex: 1,
+    backgroundColor: 'yellow',
+  },
+});
 
 export default App;
