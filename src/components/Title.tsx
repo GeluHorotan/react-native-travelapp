@@ -2,20 +2,23 @@ import React, { FC } from 'react';
 import { StyleSheet, Text } from 'react-native';
 
 interface ITitle {
-  children?: React.ReactNode;
+  text: string;
+  style?: any;
 }
 
-const Title: FC<ITitle> = ({ children }) => {
-  return <Text style={styles.title}>{children}</Text>;
+const Title: FC<ITitle> = ({ text, style }) => {
+  return <Text style={[styles.title, style]}>{text}</Text>;
 };
 
 Title.defaultProps = {
-  children: 'Default Text',
+  text: 'Default Text',
 };
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 24,
+    fontSize: 32,
+    color: '#4681A3',
+    fontWeight: 'bold',
   },
 });
 
