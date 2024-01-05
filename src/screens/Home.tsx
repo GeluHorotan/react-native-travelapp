@@ -1,9 +1,11 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import Title from '../components/Title';
 import Categories from '../components/Categories';
 
 const Home: FC = () => {
+  const [selectedCategory, setSelectedCategory] = useState<string>('All');
+
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -13,7 +15,8 @@ const Home: FC = () => {
         <Title text="Explore Attractions" style={styles.subtitle} />
 
         <Categories
-          selectedCategory="All"
+          selectedCategory={selectedCategory}
+          onCategoryPress={setSelectedCategory}
           categories={[
             'All',
             'Popular',
