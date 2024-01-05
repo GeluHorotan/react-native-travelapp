@@ -1,6 +1,7 @@
 import React, { FC } from 'react';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import Title from '../components/Title';
+import Categories from '../components/Categories';
 
 const Home: FC = () => {
   return (
@@ -10,6 +11,18 @@ const Home: FC = () => {
         <Title text="you want to go?" />
 
         <Title text="Explore Attractions" style={styles.subtitle} />
+
+        <Categories
+          selectedCategory="All"
+          categories={[
+            'All',
+            'Popular',
+            'Historical',
+            'Random',
+            'Trending',
+            'Exclusive',
+            'Others',
+          ]}></Categories>
       </View>
     </SafeAreaView>
   );
@@ -23,7 +36,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: '#000000',
     marginTop: 40,
-    marginBottom: 34,
+    marginBottom: 18,
   },
 });
 
