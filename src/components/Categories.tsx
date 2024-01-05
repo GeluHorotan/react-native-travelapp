@@ -15,8 +15,8 @@ const Categories: FC<ICategories> = ({
   return (
     <FlatList
       horizontal
+      keyExtractor={item => String(item)}
       data={categories}
-      style={{ marginRight: -32 }}
       showsHorizontalScrollIndicator={false}
       renderItem={({ item, index }) => {
         const selected = selectedCategory === item;
@@ -27,6 +27,7 @@ const Categories: FC<ICategories> = ({
             style={[
               styles.itemContainer,
               selected ? styles.selectedItemContainer : {},
+              index === 0 ? { marginLeft: 32 } : {},
             ]}>
             <Text style={[styles.item, selected ? styles.selectedItem : {}]}>
               {item}
@@ -41,8 +42,7 @@ const Categories: FC<ICategories> = ({
 const styles = StyleSheet.create({
   item: {
     fontSize: 12,
-    color: 'rgba(0,0,0, 0.5)',
-    fontWeight: '600',
+    color: 'rgba(0,0,0,0.5)',
     paddingVertical: 2,
   },
   selectedItem: {
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
   },
   itemContainer: {
     marginRight: 17,
-    marginVertical: 14,
+    marginBottom: 14,
   },
   selectedItemContainer: {
     borderBottomColor: '#4681A3',

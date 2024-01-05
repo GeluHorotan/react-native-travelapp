@@ -5,11 +5,17 @@ interface IAttractionCard {
   imageSrc: string;
   title: string;
   subtitle: string;
+  style?: any;
 }
 
-const AttractionCard: FC<IAttractionCard> = ({ imageSrc, title, subtitle }) => {
+const AttractionCard: FC<IAttractionCard> = ({
+  imageSrc,
+  title,
+  subtitle,
+  style,
+}) => {
   return (
-    <View style={styles.card}>
+    <View style={[styles.card, style]}>
       <Image style={styles.image} source={{ uri: imageSrc }} />
       <Text style={styles.title}>{title}</Text>
       <View style={styles.row}>
@@ -24,23 +30,23 @@ const { width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   card: {
-    marginRight: 16,
     padding: 4,
     borderWidth: 1,
     borderColor: '#E2E2E2',
     borderRadius: 15,
+    marginBottom: 12,
   },
   image: {
     width: (width - 96) / 2,
-    height: 120,
     borderRadius: 15,
+    height: 120,
   },
   title: {
     fontSize: 12,
+    color: '#000',
     fontWeight: '500',
     marginTop: 12,
     marginLeft: 6,
-    color: '#000',
   },
   subtitle: {
     fontSize: 10,
