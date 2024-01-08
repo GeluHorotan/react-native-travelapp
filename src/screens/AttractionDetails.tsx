@@ -9,6 +9,7 @@ import {
   Image,
   Pressable,
 } from 'react-native';
+import Title from '../components/Title';
 
 interface IAttractionDetails {
   route?: any;
@@ -59,8 +60,13 @@ const AttractionDetails: FC<IAttractionDetails> = ({ route, navigation }) => {
           ))}
         </Pressable>
       </ImageBackground>
-
-      <Text>{item?.name}</Text>
+      <View style={styles.headerContainer}>
+        <View style={styles.textContainer}>
+          <Title style={styles.title} text={item?.name} />
+          <Text style={styles.city}>{item?.city}</Text>
+        </View>
+        <Title style={styles.title} text={item?.entry_price} />
+      </View>
     </SafeAreaView>
   );
 };
@@ -94,14 +100,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 15,
-    backgroundColor: 'rgba(255,255,255,0.35)',
+    backgroundColor: 'rgba(255,255,255,0.45)',
     margin: 16,
     paddingHorizontal: 8,
   },
   miniImage: {
     width: 40,
     height: 40,
-    margin: 8,
+    marginHorizontal: 4,
+    marginVertical: 8,
     borderRadius: 10,
   },
   moreImagesContainer: {
@@ -110,7 +117,7 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     top: 8,
-    left: 8,
+    left: 4,
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
@@ -119,6 +126,21 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 20,
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginVertical: 40,
+  },
+  title: {
+    color: '#000',
+  },
+  city: {
+    fontSize: 20,
+    color: '#000',
+    marginTop: 8,
+    fontWeight: '400',
   },
 });
 
