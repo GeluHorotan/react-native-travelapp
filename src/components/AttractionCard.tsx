@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 10,
     fontWeight: '300',
-    color: 'rgba(0,0,0,0.5)',
+    color: 'rgba(0,0,0,1)',
   },
   icon: {
     width: 10,
