@@ -1,5 +1,11 @@
 import React, { FC } from 'react';
-import { SafeAreaView, StyleSheet, Text } from 'react-native';
+import {
+  ImageBackground,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  Dimensions,
+} from 'react-native';
 
 interface IAttractionDetails {
   route?: any;
@@ -8,12 +14,18 @@ interface IAttractionDetails {
 
 const AttractionDetails: FC<IAttractionDetails> = ({ route, navigation }) => {
   const { item } = route?.params || {};
+  const mainImage = item?.images?.length ? item?.images[0] : null;
   const onBack = () => {
     navigation.goBack();
   };
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={styles.container}>
+      <ImageBackground
+        style={styles.mainImage}
+        source={{ uri: mainImage }}
+        imageStyle={{ borderRadius: 20 }}
+      />
       <Text onPress={onBack} style={{ margin: 32 }}>
         BACK
       </Text>
@@ -22,25 +34,15 @@ const AttractionDetails: FC<IAttractionDetails> = ({ route, navigation }) => {
   );
 };
 
+const { height } = Dimensions.get('window');
+
 const styles = StyleSheet.create({
   container: {
-    // margin: 32,
-    flex: 1,
+    margin: 32,
   },
-  subtitle: {
-    fontSize: 20,
-    color: '#000000',
-    marginTop: 40,
-  },
-  row: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  emptyText: {
-    textAlign: 'center',
-    marginTop: 40,
-    fontSize: 12,
-    color: 'rgba(0,0,0,0.5)',
+  mainImage: {
+    width: '100%',
+    height: height / 2,
   },
 });
 
