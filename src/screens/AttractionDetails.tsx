@@ -3,12 +3,20 @@ import { SafeAreaView, StyleSheet, Text } from 'react-native';
 
 interface IAttractionDetails {
   route?: any;
+  navigation?: any;
 }
 
-const AttractionDetails: FC<IAttractionDetails> = ({ route }) => {
+const AttractionDetails: FC<IAttractionDetails> = ({ route, navigation }) => {
   const { item } = route?.params || {};
+  const onBack = () => {
+    navigation.goBack();
+  };
+
   return (
     <SafeAreaView>
+      <Text onPress={onBack} style={{ margin: 32 }}>
+        BACK
+      </Text>
       <Text>{item?.name}</Text>
     </SafeAreaView>
   );
