@@ -4,7 +4,7 @@ import { SafeAreaView, StyleSheet, Text } from 'react-native';
 const Gallery: FC = () => {
   return (
     <SafeAreaView>
-      <Text>AttractionDetail</Text>
+      <Text>Gallery</Text>
     </SafeAreaView>
   );
 };

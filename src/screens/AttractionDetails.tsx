@@ -18,8 +18,14 @@ interface IAttractionDetails {
 const AttractionDetails: FC<IAttractionDetails> = ({ route, navigation }) => {
   const { item } = route?.params || {};
   const mainImage = item?.images?.length ? item?.images[0] : null;
+  const slicedImages = item?.images?.length ? item?.images?.slice(0, 5) : [];
+  const diffImages = item?.images?.length - slicedImages?.length;
   const onBack = () => {
     navigation.goBack();
+  };
+
+  const onGalleryNavigate = () => {
+    navigation.navigate('Gallery', { images: item?.images });
   };
 
   return (
@@ -40,17 +46,18 @@ const AttractionDetails: FC<IAttractionDetails> = ({ route, navigation }) => {
           </Pressable>
         </View>
 
-        <View style={styles.footer}>
-          {item?.images?.length
-            ? item?.images?.map(image => (
-                <Image
-                  key={image}
-                  style={styles.miniImage}
-                  source={{ uri: image }}
-                />
-              ))
-            : null}
-        </View>
+        <Pressable onPress={onGalleryNavigate} style={styles.footer}>
+          {slicedImages?.map((image: string, index: number) => (
+            <View key={image}>
+              <Image style={styles.miniImage} source={{ uri: image }} />
+              {diffImages > 0 && index === slicedImages?.length - 1 ? (
+                <View style={styles.moreImagesContainer}>
+                  <Text style={styles.moreImages}>{`+${diffImages}`}</Text>
+                </View>
+              ) : null}
+            </View>
+          ))}
+        </Pressable>
       </ImageBackground>
 
       <Text>{item?.name}</Text>
@@ -96,6 +103,22 @@ const styles = StyleSheet.create({
     height: 40,
     margin: 8,
     borderRadius: 10,
+  },
+  moreImagesContainer: {
+    position: 'absolute',
+    backgroundColor: 'rgba(0,0,0,0.38)',
+    width: 40,
+    height: 40,
+    top: 8,
+    left: 8,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  moreImages: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 20,
   },
 });
 
