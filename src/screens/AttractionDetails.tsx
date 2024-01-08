@@ -10,6 +10,7 @@ import {
   Pressable,
 } from 'react-native';
 import Title from '../components/Title';
+import InfoCard from '../components/InfoCard';
 
 interface IAttractionDetails {
   route?: any;
@@ -61,12 +62,21 @@ const AttractionDetails: FC<IAttractionDetails> = ({ route, navigation }) => {
         </Pressable>
       </ImageBackground>
       <View style={styles.headerContainer}>
-        <View style={styles.textContainer}>
+        <View>
           <Title style={styles.title} text={item?.name} />
           <Text style={styles.city}>{item?.city}</Text>
         </View>
         <Title style={styles.title} text={item?.entry_price} />
       </View>
+      <InfoCard
+        icon={require('../assets/location_circle.png')}
+        text={item?.address}
+      />
+      <InfoCard
+        icon={require('../assets/schedule.png')}
+        text={`OPEN
+${item?.opening_time} - ${item?.closing_time}`}
+      />
     </SafeAreaView>
   );
 };
