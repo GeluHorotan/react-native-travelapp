@@ -11,18 +11,35 @@ import Title from '../components/Title';
 import Categories from '../components/Categories';
 import AttractionCard from '../components/AttractionCard';
 import jsonData from '../data/attractions.json';
+import categories from '../data/categories.json';
+
+const ALL = 'All';
 
 const Home: FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string>('All');
+  const [selectedCategory, setSelectedCategory] = useState<string>(ALL);
   const [data, setData] = useState<any[]>([]);
 
   useEffect(() => {
     setData(jsonData);
   }, []);
 
+  useEffect(() => {
+    if (selectedCategory === ALL) {
+      setData(jsonData);
+    } else {
+      const filteredData = jsonData?.filter(item =>
+        item?.categories?.includes(selectedCategory),
+      );
+      setData(filteredData);
+    }
+  }, [selectedCategory]);
+
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
+        ListEmptyComponent={
+          <Text style={styles.emptyText}>No items found.</Text>
+        }
         numColumns={2}
         style={{ flexGrow: 1 }}
         ListHeaderComponent={
@@ -37,15 +54,7 @@ const Home: FC = () => {
             <Categories
               selectedCategory={selectedCategory}
               onCategoryPress={setSelectedCategory}
-              categories={[
-                'All',
-                'Popular',
-                'Historical',
-                'Random',
-                'Trending',
-                'Exclusive',
-                'Others',
-              ]}
+              categories={[ALL, ...categories]}
             />
           </>
         }
@@ -82,6 +91,12 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+  },
+  emptyText: {
+    textAlign: 'center',
+    marginTop: 40,
+    fontSize: 12,
+    color: 'rgba(0,0,0,0.5)',
   },
 });
 
