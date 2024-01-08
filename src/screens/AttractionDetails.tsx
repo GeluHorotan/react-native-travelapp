@@ -1,10 +1,15 @@
 import React, { FC } from 'react';
 import { SafeAreaView, StyleSheet, Text } from 'react-native';
 
-const AttractionDetails: FC = () => {
+interface IAttractionDetails {
+  route?: any;
+}
+
+const AttractionDetails: FC<IAttractionDetails> = ({ route }) => {
+  const { item } = route?.params || {};
   return (
     <SafeAreaView>
-      <Text>AttractionDetail</Text>
+      <Text>{item?.name}</Text>
     </SafeAreaView>
   );
 };

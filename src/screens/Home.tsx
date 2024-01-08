@@ -15,7 +15,11 @@ import categories from '../data/categories.json';
 
 const ALL = 'All';
 
-const Home: FC = () => {
+interface IHome {
+  navigation: any;
+}
+
+const Home: FC<IHome> = ({ navigation }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>(ALL);
   const [data, setData] = useState<any[]>([]);
 
@@ -62,6 +66,7 @@ const Home: FC = () => {
         keyExtractor={item => String(item?.id)}
         renderItem={({ item, index }) => (
           <AttractionCard
+            onPress={() => navigation.navigate('AttractionDetails', { item })}
             key={item?.id}
             subtitle={item?.city}
             title={item?.name}

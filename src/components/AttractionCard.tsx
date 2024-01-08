@@ -1,11 +1,13 @@
 import React, { FC } from 'react';
 import { Image, StyleSheet, Dimensions, Text, View } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 interface IAttractionCard {
   imageSrc: string;
   title: string;
   subtitle: string;
   style?: any;
+  onPress: () => void;
 }
 
 const AttractionCard: FC<IAttractionCard> = ({
@@ -13,16 +15,17 @@ const AttractionCard: FC<IAttractionCard> = ({
   title,
   subtitle,
   style,
+  onPress,
 }) => {
   return (
-    <View style={[styles.card, style]}>
+    <TouchableOpacity onPress={onPress} style={[styles.card, style]}>
       <Image style={styles.image} source={{ uri: imageSrc }} />
       <Text style={styles.title}>{title}</Text>
       <View style={styles.row}>
         <Image style={styles.icon} source={require('../assets/location.png')} />
         <Text style={styles.subtitle}>{subtitle}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
