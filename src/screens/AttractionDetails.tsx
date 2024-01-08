@@ -97,6 +97,12 @@ ${item?.opening_time} - ${item?.closing_time}`;
         <MapView style={styles.map} initialRegion={coords}>
           <Marker title={item?.name} coordinate={coords} />
         </MapView>
+
+        <Text
+          style={styles.mapText}
+          onPress={() => navigation.navigate('Map', { item })}>
+          Show full screen map
+        </Text>
       </ScrollView>
     </SafeAreaView>
   );
@@ -177,7 +183,14 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 200,
     borderRadius: 10,
-    paddingBottom: 140,
+  },
+  mapText: {
+    fontWeight: 'bold',
+    color: '#4681A3',
+    fontSize: 16,
+    textAlign: 'center',
+    padding: 16,
+    marginBottom: 60,
   },
 });
 
