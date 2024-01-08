@@ -81,7 +81,7 @@ ${item?.opening_time} - ${item?.closing_time}`}
   );
 };
 
-const { height } = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   container: {

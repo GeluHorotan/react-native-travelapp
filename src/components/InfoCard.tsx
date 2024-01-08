@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 16,
   },
   icon: {
     width: 40,
