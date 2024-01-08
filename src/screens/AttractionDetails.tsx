@@ -12,6 +12,9 @@ import {
 import Title from '../components/Title';
 import InfoCard from '../components/InfoCard';
 
+import MapView, { Marker } from 'react-native-maps';
+import { ScrollView } from 'react-native-gesture-handler';
+
 interface IAttractionDetails {
   route?: any;
   navigation?: any;
@@ -22,6 +25,9 @@ const AttractionDetails: FC<IAttractionDetails> = ({ route, navigation }) => {
   const mainImage = item?.images?.length ? item?.images[0] : null;
   const slicedImages = item?.images?.length ? item?.images?.slice(0, 5) : [];
   const diffImages = item?.images?.length - slicedImages?.length;
+  const openingHours = `OPEN
+${item?.opening_time} - ${item?.closing_time}`;
+
   const onBack = () => {
     navigation.goBack();
   };
@@ -30,53 +36,68 @@ const AttractionDetails: FC<IAttractionDetails> = ({ route, navigation }) => {
     navigation.navigate('Gallery', { images: item?.images });
   };
 
+  const coords = {
+    latitude: item?.coordinates?.lat,
+    longitude: item?.coordinates?.lon,
+    latitudeDelta: 1,
+    longitudeDelta: 1,
+  };
+
   return (
     <SafeAreaView style={styles.container}>
-      <ImageBackground
-        style={styles.mainImage}
-        source={{ uri: mainImage }}
-        imageStyle={{ borderRadius: 20 }}>
-        <View style={styles.header}>
-          <Pressable onPress={onBack} hitSlop={8}>
-            <Image style={styles.icon} source={require('../assets/back.png')} />
-          </Pressable>
-          <Pressable hitSlop={8}>
-            <Image
-              style={styles.icon}
-              source={require('../assets/share.png')}
-            />
-          </Pressable>
-        </View>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <ImageBackground
+          style={styles.mainImage}
+          source={{ uri: mainImage }}
+          imageStyle={{ borderRadius: 20 }}>
+          <View style={styles.header}>
+            <Pressable onPress={onBack} hitSlop={8}>
+              <Image
+                style={styles.icon}
+                source={require('../assets/back.png')}
+              />
+            </Pressable>
+            <Pressable hitSlop={8}>
+              <Image
+                style={styles.icon}
+                source={require('../assets/share.png')}
+              />
+            </Pressable>
+          </View>
 
-        <Pressable onPress={onGalleryNavigate} style={styles.footer}>
-          {slicedImages?.map((image: string, index: number) => (
-            <View key={image}>
-              <Image style={styles.miniImage} source={{ uri: image }} />
-              {diffImages > 0 && index === slicedImages?.length - 1 ? (
-                <View style={styles.moreImagesContainer}>
-                  <Text style={styles.moreImages}>{`+${diffImages}`}</Text>
-                </View>
-              ) : null}
-            </View>
-          ))}
-        </Pressable>
-      </ImageBackground>
-      <View style={styles.headerContainer}>
-        <View>
-          <Title style={styles.title} text={item?.name} />
-          <Text style={styles.city}>{item?.city}</Text>
+          <Pressable onPress={onGalleryNavigate} style={styles.footer}>
+            {slicedImages?.map((image: string, index: number) => (
+              <View key={image}>
+                <Image style={styles.miniImage} source={{ uri: image }} />
+                {diffImages > 0 && index === slicedImages?.length - 1 ? (
+                  <View style={styles.moreImagesContainer}>
+                    <Text style={styles.moreImages}>{`+${diffImages}`}</Text>
+                  </View>
+                ) : null}
+              </View>
+            ))}
+          </Pressable>
+        </ImageBackground>
+        <View style={styles.headerContainer}>
+          <View style={{ maxWidth: '80%' }}>
+            <Title style={styles.title} text={item?.name} />
+            <Text style={styles.city}>{item?.city}</Text>
+          </View>
+          <Title style={styles.title} text={item?.entry_price} />
         </View>
-        <Title style={styles.title} text={item?.entry_price} />
-      </View>
-      <InfoCard
-        icon={require('../assets/location_circle.png')}
-        text={item?.address}
-      />
-      <InfoCard
-        icon={require('../assets/schedule.png')}
-        text={`OPEN
-${item?.opening_time} - ${item?.closing_time}`}
-      />
+        <InfoCard
+          icon={require('../assets/location_circle.png')}
+          text={item?.address}
+        />
+        <InfoCard
+          icon={require('../assets/schedule.png')}
+          text={openingHours}
+        />
+
+        <MapView style={styles.map} initialRegion={coords}>
+          <Marker title={item?.name} coordinate={coords} />
+        </MapView>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -151,6 +172,12 @@ const styles = StyleSheet.create({
     color: '#000',
     marginTop: 8,
     fontWeight: '400',
+  },
+  map: {
+    width: '100%',
+    height: 200,
+    borderRadius: 10,
+    paddingBottom: 140,
   },
 });
 
